@@ -1,0 +1,115 @@
+version: "3.8"
+
+services:
+  # ============================================
+  # Main Kedro application
+  # ============================================
+  kedro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: "{{ cookiecutter.repo_name }}-kedro"
+    volumes:
+      - .:/app
+      - kedro-data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - KEDRO_LOGGING_CONFIG=/app/conf/logging.yml
+    ports:
+      - "4141:4141" # Kedro Viz
+    command: [ "kedro", "run" ]
+    networks:
+      - retrieval-network
+
+  # ============================================
+  # Kedro Viz visualization server
+  # ============================================
+  viz:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: "{{ cookiecutter.repo_name }}-viz"
+    volumes:
+      - .:/app
+      - kedro-data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "4141:4141"
+    command: [ "kedro", "viz", "run", "--host", "0.0.0.0" ]
+    networks:
+      - retrieval-network
+    profiles:
+      - viz
+
+  # ============================================
+  # Test runner container
+  # ============================================
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: "{{ cookiecutter.repo_name }}-test"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: [ "pytest", "tests/", "-v", "--tb=short" ]
+    networks:
+      - retrieval-network
+    profiles:
+      - test
+
+  # ============================================
+  # Jupyter Lab for notebooks
+  # ============================================
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: "{{ cookiecutter.repo_name }}-jupyter"
+    volumes:
+      - .:/app
+      - kedro-data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8888:8888"
+    command: >
+      jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+    networks:
+      - retrieval-network
+    profiles:
+      - jupyter
+
+  # ============================================
+  # ChromaDB vector database (optional)
+  # ============================================
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: "{{ cookiecutter.repo_name }}-chromadb"
+    volumes:
+      - chroma-data:/chroma/chroma
+    ports:
+      - "8000:8000"
+    environment:
+      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=chromadb.auth.token.TokenConfigServerAuthCredentialsProvider
+      - IS_PERSISTENT=TRUE
+    networks:
+      - retrieval-network
+    profiles:
+      - chromadb
+
+volumes:
+  kedro-data:
+    driver: local
+  chroma-data:
+    driver: local
+
+networks:
+  retrieval-network:
+    driver: bridge

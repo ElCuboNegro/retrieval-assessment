@@ -1,0 +1,118 @@
+# Data Catalog for Retrieval Assessment
+# This catalog defines all datasets used in the project
+
+# ============================================
+# Raw Data (Layer 01)
+# ============================================
+raw_products:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/products.csv
+  load_args:
+    sep: "\t"
+    encoding: utf-8
+
+raw_queries:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/query.csv
+  load_args:
+    sep: "\t"
+    encoding: utf-8
+
+raw_labels:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/labels.csv
+  load_args:
+    sep: "\t"
+    encoding: utf-8
+
+# ============================================
+# Intermediate Data (Layer 02)
+# ============================================
+processed_products:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/processed_products.parquet
+
+relevance_labels:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/relevance_labels.parquet
+
+grouped_labels:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/grouped_labels.pkl
+
+# ============================================
+# Feature Data (Layer 04)
+# ============================================
+tfidf_vectorizer:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/tfidf_vectorizer.pkl
+
+product_tfidf_matrix:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/product_tfidf_matrix.pkl
+
+query_tfidf_vectors:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/query_tfidf_vectors.pkl
+
+product_embeddings:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/product_embeddings.pkl
+
+query_embeddings:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/query_embeddings.pkl
+
+faiss_index:
+  type: pickle.PickleDataset
+  filepath: data/04_feature/faiss_index.pkl
+
+# ============================================
+# Model Output (Layer 07)
+# ============================================
+tfidf_results:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/tfidf_results.pkl
+
+embedding_results:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/embedding_results.pkl
+
+hybrid_results:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/hybrid_results.pkl
+
+tfidf_predictions:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/tfidf_predictions.pkl
+
+embedding_predictions:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/embedding_predictions.pkl
+
+hybrid_predictions:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/hybrid_predictions.pkl
+
+# ============================================
+# Reporting (Layer 08)
+# ============================================
+tfidf_metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/tfidf_metrics.json
+
+embedding_metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/embedding_metrics.json
+
+hybrid_metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/hybrid_metrics.json
+
+comparison_table:
+  type: pandas.ParquetDataset
+  filepath: data/08_reporting/comparison_table.parquet
+
+evaluation_report:
+  type: json.JSONDataset
+  filepath: data/08_reporting/evaluation_report.json

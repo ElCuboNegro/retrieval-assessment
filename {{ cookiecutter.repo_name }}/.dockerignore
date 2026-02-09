@@ -1,0 +1,76 @@
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Kedro specific
+data/
+!data/.gitkeep
+logs/
+.telemetry
+info.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Credentials (never commit)
+*.pem
+*.key
+credentials.json
+.env
+.env.local
+.env.*.local
+
+# Model artifacts (too large for git)
+*.pkl
+*.pickle
+*.faiss
+*.h5
+*.ckpt
+*.pt
+*.pth

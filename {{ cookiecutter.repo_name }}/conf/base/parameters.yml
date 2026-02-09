@@ -1,0 +1,39 @@
+# Parameters for Retrieval Assessment
+# Adjust these parameters to tune the retrieval system
+
+# ============================================
+# Data Ingestion Parameters
+# ============================================
+# Path to WANDS dataset files
+products_path: data/01_raw/products.csv
+queries_path: data/01_raw/query.csv
+labels_path: data/01_raw/labels.csv
+
+# ============================================
+# Vectorization Parameters
+# ============================================
+# TF-IDF settings
+tfidf_max_features: 10000
+tfidf_ngram_range:
+  - 1
+  - 2
+
+# Embedding model (from sentence-transformers)
+# Options: all-MiniLM-L6-v2, all-mpnet-base-v2, multi-qa-mpnet-base-dot-v1
+embedding_model: "all-MiniLM-L6-v2"
+embedding_batch_size: 32
+
+# ============================================
+# Retrieval Parameters
+# ============================================
+# Number of results to return per query
+top_k: 10
+
+# Hybrid search weight (0 = embeddings only, 1 = TF-IDF only)
+hybrid_alpha: 0.5
+
+# ============================================
+# Evaluation Parameters
+# ============================================
+# Cutoff for evaluation metrics
+eval_k: 10
