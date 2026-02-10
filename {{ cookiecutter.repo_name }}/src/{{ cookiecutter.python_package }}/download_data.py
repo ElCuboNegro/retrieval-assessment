@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import os
+
 import urllib.request
 from pathlib import Path
 
@@ -31,15 +31,15 @@ def download_wands_dataset(data_dir: str = "data/01_raw") -> None:
         target_path = data_path / filename
 
         if target_path.exists():
-            print(f"  ✓ {filename} already exists, skipping")
+            print(f"  [OK] {filename} already exists, skipping")
             continue
 
-        print(f"  ↓ Downloading {filename}...")
+        print(f"  -> Downloading {filename}...")
         try:
             urllib.request.urlretrieve(url, target_path)
-            print(f"  ✓ {filename} downloaded successfully")
+            print(f"  [OK] {filename} downloaded successfully")
         except Exception as e:
-            print(f"  ✗ Error downloading {filename}: {e}")
+            print(f"  [ERROR] Error downloading {filename}: {e}")
 
     print("\nDataset download complete!")
     print(f"Files are in: {data_path.absolute()}")

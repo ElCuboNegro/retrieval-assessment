@@ -25,7 +25,7 @@ The project demonstrates how to build a production-ready retrieval pipeline usin
 
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+pip install -e .
 
 # Download WANDS dataset
 python -m {{ cookiecutter.python_package }}.download_data

@@ -3,6 +3,15 @@
     "repo_name": "{{ cookiecutter.project_name.strip().replace(' ', '-').replace('_', '-').lower() }}",
     "python_package": "{{ cookiecutter.project_name.strip().replace(' ', '_').replace('-', '_').lower() }}",
     "kedro_version": "1.2.0",
-    "tools": "{{ cookiecutter.tools }}",
-    "example_pipeline": "{{ cookiecutter.example_pipeline }}"
+    "tools": [
+        "None",
+        "vulture",
+        "isort",
+        "black",
+        "flake8"
+    ],
+    "example_pipeline": [
+        "True",
+        "False"
+    ]
 }
